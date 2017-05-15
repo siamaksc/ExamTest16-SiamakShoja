@@ -472,12 +472,23 @@ log.info(xmlResponse)
 def SlurperResponse = new XmlSlurper().parseText(xmlResponse.Body.GetUKLocationByTownResponse.GetUKLocationByTownResult.toString())
 log.info(SlurperResponse)
 
-//To get the specific country name (Sweden)
-def ukTown = SlurperResponse.Table.Town[0]
+def ukTown
+def ukCounty
+def ukPostCode
+for (int i=0 ; i &lt; SlurperResponse.Table.size() ; i++){
+	if ( SlurperResponse.Table.PostCode[i] == "SG17"){
+		ukTown = SlurperResponse.Table.Town[i]
+		ukCounty = SlurperResponse.Table.County[i]
+		ukPostCode = SlurperResponse.Table.PostCode[i]
+		}
+	
+	}
+//To get the specific town name (Clifton)
+//def ukTown = SlurperResponse.Table.Town[0]
 log.info(ukTown)
-def ukCounty = SlurperResponse.Table.County[0]
+//def ukCounty = SlurperResponse.Table.County[0]
 log.info(ukCounty)
-def ukPostCode = SlurperResponse.Table.PostCode[0]
+//def ukPostCode = SlurperResponse.Table.PostCode[0]
 log.info(ukPostCode)
 
 //To save the result (Country Code) in project level
